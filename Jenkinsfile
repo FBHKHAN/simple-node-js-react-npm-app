@@ -1,16 +1,18 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:current-buster-slim'
-            args '-p 5000:5000'
-        }
-    }
-    stages {
-        stage('Build') {
-            steps {
-                sh 'npm install'
-            }
-        }
+  agent any
 
-    }
+  tools {nodejs "node"}
+
+  stages {          
+    stage('Install dependencies') {
+      steps {
+        sh 'npm install'
+      }
+    }     
+    stage('Test') {
+      steps {
+         sh 'npm run start'
+      }
+    }             
+  }
 }
